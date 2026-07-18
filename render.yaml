@@ -1,0 +1,21 @@
+# Render.com deployment configuration for NiDa
+# Free tier: https://render.com — deploys directly from your GitHub repo.
+services:
+  - type: web
+    name: nida-backend
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: FIRMS_MAP_KEY
+        sync: false          # set manually in Render dashboard (secret)
+      - key: OPENWEATHERMAP_API_KEY
+        sync: false          # set manually in Render dashboard (secret)
+      - key: ORS_API_KEY
+        sync: false          # set manually in Render dashboard (secret)
+      - key: FIRMS_DAY_RANGE
+        value: "3"
+      - key: DATABASE_URL
+        value: "sqlite:///./nida.db"
+      - key: FIREBASE_CREDENTIALS_PATH
+        value: "./firebase_service_account.json"

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NiDa — Fire Archive | Algeria</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{--panel:rgba(21,21,38,.95);--panel2:rgba(30,30,52,.97);--txt:#f0f0f5;
+    --critical:#d32f2f;--warning:#f57c00;--advisory:#fbc02d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,sans-serif;overflow:hidden}
+  #map{height:100vh;width:100vw}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:1100;background:var(--panel);color:var(--txt);
+    padding:8px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    box-shadow:0 2px 12px rgba(0,0,0,.45)}
+  .topbar h1{font-size:1rem;font-weight:600}
+  .topbar .sub{font-size:.7rem;opacity:.7}
+  .clock{font-size:.78rem;opacity:.9;font-variant-numeric:tabular-nums;
+    border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:3px 9px}
+  .langs{display:flex;gap:4px;margin-inline-start:auto}
+  .langs button{background:transparent;border:1px solid rgba(255,255,255,.25);color:var(--txt);
+    border-radius:6px;padding:3px 9px;cursor:pointer;font-size:.75rem}
+  .langs button.active{background:#fff;color:#151526;font-weight:700}
+  .backbtn{background:transparent;border:1px solid rgba(255,255,255,.25);color:var(--txt);
+    border-radius:6px;padding:3px 10px;cursor:pointer;font-size:.75rem;text-decoration:none}
+
+  .controls{position:fixed;top:64px;inset-inline-start:10px;z-index:1050;background:var(--panel2);
+    color:var(--txt);border-radius:10px;padding:14px;width:270px;font-size:.78rem}
+  .controls h2{font-size:.85rem;margin-bottom:10px}
+  .controls label{display:block;margin:8px 0 3px;opacity:.85}
+  .controls input[type=date]{width:100%;padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,.25);
+    background:rgba(255,255,255,.08);color:var(--txt);font-size:.78rem}
+  .controls .load{margin-top:12px;width:100%;background:#2e6b4f;border:none;color:#fff;
+    border-radius:8px;padding:9px;cursor:pointer;font-size:.82rem}
+  .controls .load:disabled{opacity:.5}
+  .controls .stats{margin-top:10px;line-height:1.8;opacity:.85}
+  .controls .toggle{margin-top:8px;display:flex;align-items:center;gap:7px;cursor:pointer}
+  .legend{margin-top:12px;border-top:1px solid rgba(255,255,255,.12);padding-top:9px;line-height:1.9}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-inline-end:6px;vertical-align:middle}
+  .leaflet-popup-content{font-size:.8rem;line-height:1.5}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span style="font-size:1.15rem"><i class="fa-solid fa-box-archive"></i></span>
+  <div>
+    <h1 data-i18n="title">NiDa — Fire Archive</h1>
+    <div class="sub" data-i18n="subtitle">Historical wildfire record — Algeria</div>
+  </div>
+  <div class="clock"><i class="fa-regular fa-clock"></i> <span id="dz-clock">--:--:--</span> <span data-i18n="dz_time">Algeria time</span></div>
+  <div class="langs">
+    <button data-lang="en">EN</button><button data-lang="fr">FR</button><button data-lang="ar">ع</button>
+  </div>
+  <a class="backbtn" href="/map"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Live map</span></a>
+</div>
+
+<div class="controls">
+  <h2><i class="fa-solid fa-calendar-days"></i> <span data-i18n="select_period">Select period</span></h2>
+  <label data-i18n="from">From</label>
+  <input type="date" id="date-start">
+  <label data-i18n="to">To</label>
+  <input type="date" id="date-end">
+  <label class="toggle"><input type="checkbox" id="show-snapshots" checked>
+    <span data-i18n="show_snaps">Show fire event snapshots</span></label>
+  <button class="load" id="btn-load"><i class="fa-solid fa-magnifying-glass"></i> <span data-i18n="load">Load period</span></button>
+  <div class="stats" id="stats"></div>
+  <div class="legend">
+    <div><span class="dot" style="background:#ba68c8"></span><span data-i18n="lg_det">Satellite detection</span></div>
+    <div><span class="dot" style="background:var(--critical)"></span><span data-i18n="lg_crit">Critical event</span></div>
+    <div><span class="dot" style="background:var(--warning)"></span><span data-i18n="lg_warn">Warning event</span></div>
+    <div><span class="dot" style="background:var(--advisory)"></span><span data-i18n="lg_adv">Advisory event</span></div>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const I18N={
+en:{title:"NiDa — Fire Archive",subtitle:"Historical wildfire record — Algeria",dz_time:"Algeria time",
+back:"Live map",select_period:"Select period",from:"From",to:"To",show_snaps:"Show fire event snapshots",
+load:"Load period",loading:"Loading...",lg_det:"Satellite detection",lg_crit:"Critical event",
+lg_warn:"Warning event",lg_adv:"Advisory event",
+st_range:"Available: {a} → {b}",st_loaded:"{d} detections · {s} event snapshots",st_none:"No data in this period.",
+pu_det:"Detection",pu_snap:"Fire event snapshot",pu_frp:"Intensity",pu_pts:"Detections",pu_at:"Snapshot"},
+fr:{title:"NiDa — Archive des feux",subtitle:"Historique des feux — Algérie",dz_time:"Heure d'Algérie",
+back:"Carte en direct",select_period:"Choisir la période",from:"Du",to:"Au",show_snaps:"Afficher les instantanés d'événements",
+load:"Charger la période",loading:"Chargement...",lg_det:"Détection satellite",lg_crit:"Événement critique",
+lg_warn:"Événement — alerte",lg_adv:"Événement — avis",
+st_range:"Disponible : {a} → {b}",st_loaded:"{d} détections · {s} instantanés",st_none:"Aucune donnée pour cette période.",
+pu_det:"Détection",pu_snap:"Instantané d'événement",pu_frp:"Intensité",pu_pts:"Détections",pu_at:"Instantané"},
+ar:{title:"نداء — أرشيف الحرائق",subtitle:"السجل التاريخي لحرائق الغابات — الجزائر",dz_time:"توقيت الجزائر",
+back:"الخريطة المباشرة",select_period:"اختر الفترة",from:"من",to:"إلى",show_snaps:"عرض لقطات أحداث الحرائق",
+load:"تحميل الفترة",loading:"جاري التحميل...",lg_det:"رصد قمر صناعي",lg_crit:"حدث حرج",
+lg_warn:"حدث — تحذير",lg_adv:"حدث — تنبيه",
+st_range:"متاح: {a} ← {b}",st_loaded:"{d} رصداً · {s} لقطة حدث",st_none:"لا توجد بيانات لهذه الفترة.",
+pu_det:"رصد",pu_snap:"لقطة حدث حريق",pu_frp:"الشدة",pu_pts:"عدد الرصد",pu_at:"وقت اللقطة"}};
+let LANG=localStorage.getItem('nida_lang')||'en';
+const t=k=>(I18N[LANG]&&I18N[LANG][k])||I18N.en[k]||k;
+function applyLang(){
+  document.documentElement.lang=LANG;
+  document.body.dir=(LANG==='ar')?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
+  document.querySelectorAll('.langs button').forEach(b=>b.classList.toggle('active',b.dataset.lang===LANG));
+}
+document.querySelectorAll('.langs button').forEach(b=>b.onclick=()=>{LANG=b.dataset.lang;
+  localStorage.setItem('nida_lang',LANG);applyLang();});
+
+/* Algeria clock: fixed UTC+1, no DST since 1981 */
+function tick(){
+  document.getElementById('dz-clock').textContent=
+    new Date().toLocaleTimeString('en-GB',{timeZone:'Africa/Algiers',hour12:false});
+}
+setInterval(tick,1000);tick();
+
+const SEV={critical:'#d32f2f',warning:'#f57c00',advisory:'#fbc02d'};
+const map=L.map('map',{zoomControl:false}).setView([35.5,3.0],6);
+L.control.zoom({position:'bottomright'}).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {attribution:'&copy; OpenStreetMap | NASA FIRMS | NiDa',maxZoom:18}).addTo(map);
+const layer=L.layerGroup().addTo(map);
+
+async function loadSummary(){
+  try{
+    const r=await fetch('/api/v1/archive/summary');const d=await r.json();
+    if(d.earliest_date&&d.latest_date){
+      const s=document.getElementById('date-start'),e=document.getElementById('date-end');
+      s.min=d.earliest_date;s.max=d.latest_date;e.min=d.earliest_date;e.max=d.latest_date;
+      s.value=d.earliest_date;e.value=d.latest_date;
+      document.getElementById('stats').textContent=
+        t('st_range').replace('{a}',d.earliest_date).replace('{b}',d.latest_date);
+    }
+  }catch(err){console.error(err);}
+}
+
+async function loadPeriod(){
+  const s=document.getElementById('date-start').value,e=document.getElementById('date-end').value;
+  if(!s||!e)return;
+  const btn=document.getElementById('btn-load');btn.disabled=true;
+  document.getElementById('stats').textContent=t('loading');
+  try{
+    const snaps=document.getElementById('show-snapshots').checked;
+    const r=await fetch(`/api/v1/archive/geojson?start=${s}&end=${e}&include_snapshots=${snaps}`);
+    const gj=await r.json();
+    layer.clearLayers();
+    let nd=0,ns=0;
+    gj.features.forEach(f=>{
+      const p=f.properties,[lon,lat]=f.geometry.coordinates;
+      if(p.feature_type==='detection'){
+        nd++;
+        L.circleMarker([lat,lon],{radius:2.5,color:'#7b1fa2',weight:1,fillColor:'#ba68c8',fillOpacity:.75})
+          .bindPopup(`<b>${t('pu_det')}</b><br>${p.acq_date} ${p.acq_time??''}<br>${p.satellite??''} · ${t('pu_frp')}: ${p.frp??'?'} MW`)
+          .addTo(layer);
+      }else{
+        ns++;
+        const color=SEV[p.severity_level]||'#888';
+        L.circleMarker([lat,lon],{radius:7,color:'#fff',weight:1.5,fillColor:color,fillOpacity:.95})
+          .bindPopup(`<b>${t('pu_snap')} #${p.live_cluster_id}</b><br>${t('pu_frp')}: ${p.max_frp} MW · ${t('pu_pts')}: ${p.point_count}<br>${t('pu_at')}: ${(p.snapshot_at||'').replace('T',' ').slice(0,16)}`)
+          .addTo(layer);
+      }
+    });
+    document.getElementById('stats').textContent=
+      (nd+ns)?t('st_loaded').replace('{d}',nd).replace('{s}',ns):t('st_none');
+  }catch(err){console.error(err);document.getElementById('stats').textContent=t('st_none');}
+  finally{btn.disabled=false;}
+}
+document.getElementById('btn-load').onclick=loadPeriod;
+
+applyLang();loadSummary();
+</script>
+</body>
+</html>
