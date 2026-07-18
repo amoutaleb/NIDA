@@ -83,7 +83,7 @@ en: {
     </table>
 
     <h2>Limitations</h2>
-    <p>Satellite thermal detections can include non-fire heat sources (for example industrial or gas-flare activity) and can miss fires obscured by cloud or canopy. Alert zones are modeled estimates, not measured fire perimeters. Routing avoids only <i>detected</i> fire zones and depends on third-party road data. The French and Arabic text is a functional translation pending native-speaker review. This system supports, and does not replace, official civil-protection decisions.</p>
+    <p>NiDa applies a MODIS land cover filter that removes most thermal detections in barren desert, where heat sources are typically industrial or gas flares rather than wildfires; because the filter is deliberately conservative, a small number of such sources may still appear. Satellite detection can also miss fires obscured by cloud or dense canopy. Alert zones are modeled estimates, not measured fire perimeters. Routing avoids only <i>detected</i> fire zones and depends on third-party road data. This system supports, and does not replace, official civil-protection decisions.</p>
 
     <footer>NiDa research prototype. For research and evaluation use. In an emergency, contact Civil Protection (14).</footer>`
 },
@@ -122,7 +122,7 @@ fr: {
     </table>
 
     <h2>Limites</h2>
-    <p>Les détections thermiques satellitaires peuvent inclure des sources de chaleur non liées au feu (activité industrielle, torchères) et manquer des feux masqués par les nuages ou la végétation. Les zones d'alerte sont des estimations modélisées, non des périmètres mesurés. Le calcul d'itinéraire ne contourne que les zones de feu <i>détectées</i>. Le texte français et arabe est une traduction fonctionnelle en attente de révision par un locuteur natif. Ce système appuie, sans les remplacer, les décisions officielles de la protection civile.</p>
+   <p>NiDa applique un filtre de couverture du sol (MODIS) qui élimine la plupart des détections thermiques dans le désert aride, où les sources de chaleur sont généralement industrielles ou des torchères plutôt que des feux de forêt ; ce filtre étant volontairement prudent, un petit nombre de telles sources peut subsister. La détection satellitaire peut aussi manquer des feux masqués par les nuages ou une végétation dense. Les zones d'alerte sont des estimations modélisées, non des périmètres mesurés. Le calcul d'itinéraire ne contourne que les zones de feu <i>détectées</i> et dépend de données routières tierces. Ce système appuie, sans les remplacer, les décisions officielles de la protection civile.</p>
 
     <footer>Prototype de recherche NiDa. Usage de recherche et d'évaluation. En cas d'urgence, contactez la Protection Civile (14).</footer>`
 },
@@ -161,8 +161,7 @@ ar: {
     </table>
 
     <h2>القيود</h2>
-    <p>قد تتضمّن الرصدات الحرارية الساتلية مصادر حرارة غير نارية (كالنشاط الصناعي أو شعلات الغاز) وقد تُغفل حرائق تحجبها الغيوم أو الغطاء النباتي. مناطق الإنذار تقديرات نموذجية وليست محيطات حريق مقيسة. يتجنّب حساب المسار مناطق الحرائق <i>المكتشفة</i> فقط. النصّان الفرنسي والعربي ترجمة وظيفية بانتظار مراجعة متحدث أصلي. يدعم هذا النظام قرارات الحماية المدنية الرسمية ولا يحلّ محلها.</p>
-
+<p>يطبّق نداء مرشّح غطاء أرضي (MODIS) يزيل معظم الرصدات الحرارية في الصحراء القاحلة، حيث تكون مصادر الحرارة غالباً صناعية أو شعلات غاز لا حرائق غابات؛ ولأن المرشّح متحفّظ عمداً، قد يظهر عدد قليل من هذه المصادر. كما قد تُغفل الأقمار الصناعية حرائق تحجبها الغيوم أو الغطاء النباتي الكثيف. مناطق الإنذار تقديرات نموذجية وليست محيطات حريق مقيسة. يتجنّب حساب المسار مناطق الحرائق <i>المكتشفة</i> فقط ويعتمد على بيانات طرق من جهات خارجية. يدعم هذا النظام قرارات الحماية المدنية الرسمية ولا يحلّ محلها.</p>
     <footer>نموذج نداء البحثي. للاستخدام البحثي والتقييمي. في حالة الطوارئ اتصل بالحماية المدنية (14).</footer>`
 }};
 
