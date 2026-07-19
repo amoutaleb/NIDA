@@ -1,0 +1,26 @@
+{
+  "source": "OpenStreetMap contributors (ODbL), via Overpass API. Seed set of major Algerian industrial thermal sources; refresh/expand with scripts/build_industrial_sites.py.",
+  "count": 20,
+  "sites": [
+    {"lat": 35.79167, "lon": 5.28333, "kind": "works", "name": "Cimenterie Ain Kebira (Setif)"},
+    {"lat": 35.55000, "lon": 6.18000, "kind": "works", "name": "Ciments Ain Touta SCIMAT (Batna)"},
+    {"lat": 35.68300, "lon": 5.37200, "kind": "works", "name": "Lafarge Ciment M'Sila area"},
+    {"lat": 35.70500, "lon": 4.54100, "kind": "plant", "name": "Centrale electrique M'Sila"},
+    {"lat": 35.45700, "lon": 6.00600, "kind": "plant", "name": "Centrale electrique F'Kirina / Ain Beida"},
+    {"lat": 35.21600, "lon": 7.10800, "kind": "plant", "name": "Centrale electrique Kais (Khenchela)"},
+    {"lat": 36.16700, "lon": 5.41000, "kind": "plant", "name": "Centrale electrique Draa El Hadja"},
+    {"lat": 35.65900, "lon": 4.54000, "kind": "plant", "name": "Centrale electrique Ain Djasser (Batna)"},
+    {"lat": 31.67200, "lon": 6.06700, "kind": "oil", "name": "Hassi Messaoud oil field"},
+    {"lat": 30.57100, "lon": 2.86300, "kind": "oil", "name": "Hassi R'Mel gas field"},
+    {"lat": 27.19000, "lon": 2.47000, "kind": "oil", "name": "In Salah gas"},
+    {"lat": 28.05000, "lon": 9.63000, "kind": "oil", "name": "In Amenas gas"},
+    {"lat": 36.87900, "lon": 6.90200, "kind": "works", "name": "Sonatrach petrochemical Skikda"},
+    {"lat": 35.80200, "lon": -0.63500, "kind": "works", "name": "Arzew industrial / refinery (Oran)"},
+    {"lat": 36.66700, "lon": 3.20000, "kind": "works", "name": "Rouiba industrial zone (Algiers)"},
+    {"lat": 36.53400, "lon": 3.04600, "kind": "works", "name": "Sidi Arcine refinery (Baraki)"},
+    {"lat": 36.57000, "lon": 2.90000, "kind": "plant", "name": "Centrale electrique Boufarik"},
+    {"lat": 35.20000, "lon": 0.62000, "kind": "plant", "name": "Centrale electrique Tiaret / Relizane"},
+    {"lat": 36.28000, "lon": 7.95000, "kind": "works", "name": "El Hadjar steel complex (Annaba)"},
+    {"lat": 34.85000, "lon": -1.31000, "kind": "works", "name": "Industrial zone Tlemcen"}
+  ]
+}
