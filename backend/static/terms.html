@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NiDa — Terms &amp; Attributions</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{--panel:rgba(21,21,38,.97);--txt:#f0f0f5;--accent:#4caf82}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#12121e;color:var(--txt);
+    line-height:1.6;min-height:100vh}
+  .topbar{background:var(--panel);padding:10px 18px;display:flex;align-items:center;gap:12px;
+    flex-wrap:wrap;position:sticky;top:0;z-index:10;box-shadow:0 2px 12px rgba(0,0,0,.4)}
+  .topbar h1{font-size:1rem;font-weight:600}
+  .langs{display:flex;gap:4px;margin-inline-start:auto}
+  .langs button{background:transparent;border:1px solid rgba(255,255,255,.25);color:var(--txt);
+    border-radius:6px;padding:3px 9px;cursor:pointer;font-size:.75rem}
+  .langs button.active{background:#fff;color:#12121e;font-weight:700}
+  .backbtn{background:transparent;border:1px solid rgba(255,255,255,.25);color:var(--txt);
+    border-radius:6px;padding:3px 10px;cursor:pointer;font-size:.75rem;text-decoration:none}
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 60px}
+  h2{font-size:1.25rem;margin:26px 0 10px;color:#fff}
+  h3{font-size:1rem;margin:18px 0 6px;color:var(--accent)}
+  p{margin:8px 0;opacity:.92}
+  a{color:#7db8ff}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.85rem}
+  th,td{border:1px solid rgba(255,255,255,.14);padding:8px 10px;text-align:start;vertical-align:top}
+  th{background:rgba(255,255,255,.06);font-weight:600}
+  .lic{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);
+    border-radius:10px;padding:16px 18px;margin:12px 0}
+  .lic ul{margin:8px 0;padding-inline-start:22px}
+  .lic li{margin:4px 0}
+  .note{opacity:.7;font-size:.85rem;margin-top:8px}
+  footer{opacity:.6;font-size:.8rem;margin-top:34px;border-top:1px solid rgba(255,255,255,.12);padding-top:14px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span style="font-size:1.1rem"><i class="fa-solid fa-scale-balanced"></i></span>
+  <h1 data-i18n="title">NiDa — Terms &amp; Attributions</h1>
+  <div class="langs">
+    <button data-lang="en">EN</button><button data-lang="fr">FR</button><button data-lang="ar">ع</button>
+  </div>
+  <a class="backbtn" href="/map"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Live map</span></a>
+</div>
+<div class="wrap" id="content"></div>
+
+<script>
+const I18N = {
+en: {
+  title: "NiDa — Terms & Attributions", back: "Live map",
+  html: `
+    <h2>About this system</h2>
+    <p>NiDa (National Integrated Disaster Alert) is a research prototype of a satellite-driven wildfire early-warning system for Algeria. It is provided for research, evaluation, and educational use. It is <b>not</b> an official emergency service. In an emergency, always follow the instructions of the Algerian Civil Protection (call 14).</p>
+
+    <h2>License</h2>
+    <div class="lic">
+      <p>This project is released for <b>research, academic, and educational purposes</b> under the following terms:</p>
+      <ul>
+        <li>You may view, run, study, and build upon the code for non-commercial research and learning.</li>
+        <li>Redistribution as your own work, or repackaging of the system or the "NiDa" name, is not permitted.</li>
+        <li>Commercial use is not permitted without prior written permission from the author.</li>
+        <li>Modifications intended for release should be coordinated with the author.</li>
+        <li>Any publication or work that uses this system must cite the associated research paper (reference to be added upon publication).</li>
+      </ul>
+      <p class="note">Author and citation details are withheld during peer review and will be added here upon publication.</p>
+    </div>
+
+    <h2>Data sources &amp; attributions</h2>
+    <p>NiDa is built entirely on freely available data and open tools. Each is acknowledged below.</p>
+    <table>
+      <tr><th>Source</th><th>Used for</th><th>Terms</th></tr>
+      <tr><td>NASA FIRMS (VIIRS &amp; MODIS active fire)</td><td>Fire detection</td><td>NASA open data; free to use with citation. "Data courtesy of NASA FIRMS."</td></tr>
+      <tr><td>NASA MODIS MCD12C1 (land cover)</td><td>Vegetation classification &amp; desert false-positive filtering</td><td>NASA LP DAAC; no restrictions on reuse or redistribution; citation requested.</td></tr>
+      <tr><td>Open-Meteo</td><td>Wind speed &amp; direction</td><td>Free weather API; CC-BY 4.0.</td></tr>
+      <tr><td>OpenWeatherMap</td><td>Wind data (fallback)</td><td>Free tier; attribution required.</td></tr>
+      <tr><td>OpenRouteService (HeiGIT)</td><td>Evacuation routing</td><td>Free tier; routing © openrouteservice.org, based on OpenStreetMap data.</td></tr>
+      <tr><td>OpenStreetMap</td><td>Map tiles &amp; routing base data</td><td>© OpenStreetMap contributors, <a href="https://www.openstreetmap.org/copyright">ODbL</a>. Note: the public tile server is not intended for production use.</td></tr>
+      <tr><td>Natural Earth</td><td>Algeria national boundary</td><td>Public domain.</td></tr>
+      <tr><td>Leaflet</td><td>Interactive map library</td><td>BSD-2-Clause.</td></tr>
+      <tr><td>Font Awesome (Free)</td><td>Interface icons</td><td>CC-BY 4.0 / MIT / SIL OFL.</td></tr>
+    </table>
+
+    <h2>Limitations</h2>
+    <p>NiDa applies a MODIS land cover filter that removes most thermal detections in barren desert, where heat sources are typically industrial or gas flares rather than wildfires; because the filter is deliberately conservative, a small number of such sources may still appear. Satellite detection can also miss fires obscured by cloud or dense canopy. Alert zones are modeled estimates, not measured fire perimeters. Routing avoids only <i>detected</i> fire zones and depends on third-party road data. This system supports, and does not replace, official civil-protection decisions.</p>
+
+    <footer>NiDa research prototype. For research and evaluation use. In an emergency, contact Civil Protection (14).</footer>`
+},
+fr: {
+  title: "NiDa — Conditions & Attributions", back: "Carte en direct",
+  html: `
+    <h2>À propos de ce système</h2>
+    <p>NiDa (Alerte Nationale Intégrée aux Catastrophes) est un prototype de recherche d'un système d'alerte précoce aux feux de forêt pour l'Algérie, fondé sur l'imagerie satellitaire. Il est fourni à des fins de recherche, d'évaluation et d'éducation. Ce n'est <b>pas</b> un service d'urgence officiel. En cas d'urgence, suivez toujours les consignes de la Protection Civile algérienne (appelez le 14).</p>
+
+    <h2>Licence</h2>
+    <div class="lic">
+      <p>Ce projet est diffusé à des fins <b>de recherche, académiques et éducatives</b> selon les termes suivants :</p>
+      <ul>
+        <li>Vous pouvez consulter, exécuter, étudier et développer le code à des fins de recherche et d'apprentissage non commerciales.</li>
+        <li>La redistribution en tant que votre propre travail, ou le réemballage du système ou du nom « NiDa », n'est pas autorisée.</li>
+        <li>L'usage commercial n'est pas autorisé sans l'accord écrit préalable de l'auteur.</li>
+        <li>Les modifications destinées à être diffusées doivent être coordonnées avec l'auteur.</li>
+        <li>Toute publication utilisant ce système doit citer l'article de recherche associé (référence à ajouter lors de la publication).</li>
+      </ul>
+      <p class="note">Les informations sur l'auteur et la citation sont masquées pendant l'évaluation par les pairs et seront ajoutées ici après publication.</p>
+    </div>
+
+    <h2>Sources de données &amp; attributions</h2>
+    <p>NiDa repose entièrement sur des données librement accessibles et des outils ouverts. Chacun est reconnu ci-dessous.</p>
+    <table>
+      <tr><th>Source</th><th>Utilisation</th><th>Conditions</th></tr>
+      <tr><td>NASA FIRMS (VIIRS &amp; MODIS)</td><td>Détection des feux</td><td>Données ouvertes NASA ; libres avec citation.</td></tr>
+      <tr><td>NASA MODIS MCD12C1 (couverture du sol)</td><td>Classification de la végétation &amp; filtrage des faux positifs du désert</td><td>NASA LP DAAC ; aucune restriction ; citation demandée.</td></tr>
+      <tr><td>Open-Meteo</td><td>Vent</td><td>API météo gratuite ; CC-BY 4.0.</td></tr>
+      <tr><td>OpenWeatherMap</td><td>Vent (secours)</td><td>Offre gratuite ; attribution requise.</td></tr>
+      <tr><td>OpenRouteService (HeiGIT)</td><td>Itinéraires d'évacuation</td><td>Offre gratuite ; © openrouteservice.org, basé sur OpenStreetMap.</td></tr>
+      <tr><td>OpenStreetMap</td><td>Fonds de carte &amp; données routières</td><td>© les contributeurs OpenStreetMap, <a href="https://www.openstreetmap.org/copyright">ODbL</a>. Le serveur public de tuiles n'est pas destiné à la production.</td></tr>
+      <tr><td>Natural Earth</td><td>Frontière de l'Algérie</td><td>Domaine public.</td></tr>
+      <tr><td>Leaflet</td><td>Bibliothèque cartographique</td><td>BSD-2-Clause.</td></tr>
+      <tr><td>Font Awesome (Free)</td><td>Icônes</td><td>CC-BY 4.0 / MIT / SIL OFL.</td></tr>
+    </table>
+
+    <h2>Limites</h2>
+    <p>NiDa applique un filtre de couverture du sol (MODIS) qui élimine la plupart des détections thermiques dans le désert aride, où les sources de chaleur sont généralement industrielles ou des torchères plutôt que des feux de forêt ; ce filtre étant volontairement prudent, un petit nombre de telles sources peut subsister. La détection satellitaire peut aussi manquer des feux masqués par les nuages ou une végétation dense. Les zones d'alerte sont des estimations modélisées, non des périmètres mesurés. Le calcul d'itinéraire ne contourne que les zones de feu <i>détectées</i> et dépend de données routières tierces. Ce système appuie, sans les remplacer, les décisions officielles de la protection civile.</p>
+
+    <footer>Prototype de recherche NiDa. Usage de recherche et d'évaluation. En cas d'urgence, contactez la Protection Civile (14).</footer>`
+},
+ar: {
+  title: "نداء — الشروط والإسناد", back: "الخريطة المباشرة",
+  html: `
+    <h2>حول هذا النظام</h2>
+    <p>نداء (نظام التنبيه الوطني المتكامل للكوارث) نموذج بحثي لنظام إنذار مبكر بحرائق الغابات في الجزائر يعتمد على الأقمار الصناعية. يُقدَّم لأغراض البحث والتقييم والتعليم، وهو <b>ليس</b> خدمة طوارئ رسمية. في حالة الطوارئ اتبع دائماً تعليمات الحماية المدنية الجزائرية (اتصل بالرقم 14).</p>
+
+    <h2>الرخصة</h2>
+    <div class="lic">
+      <p>يُتاح هذا المشروع لأغراض <b>البحث والدراسة الأكاديمية والتعليم</b> وفق الشروط التالية:</p>
+      <ul>
+        <li>يمكنك الاطلاع على الشيفرة وتشغيلها ودراستها والبناء عليها لأغراض بحثية وتعليمية غير تجارية.</li>
+        <li>لا يُسمح بإعادة نشر النظام كعمل خاص بك، ولا بإعادة تجميع النظام أو اسم «نداء».</li>
+        <li>لا يُسمح بالاستخدام التجاري دون إذن كتابي مسبق من المؤلف.</li>
+        <li>ينبغي تنسيق أي تعديلات مُعدّة للنشر مع المؤلف.</li>
+        <li>يجب على أي منشور يستخدم هذا النظام أن يستشهد بالورقة البحثية المرتبطة (يُضاف المرجع عند النشر).</li>
+      </ul>
+      <p class="note">تُحجب بيانات المؤلف والاستشهاد أثناء مراجعة الأقران وتُضاف هنا عند النشر.</p>
+    </div>
+
+    <h2>مصادر البيانات والإسناد</h2>
+    <p>يعتمد نداء بالكامل على بيانات متاحة مجاناً وأدوات مفتوحة. ويُنسب الفضل لكلٍّ منها أدناه.</p>
+    <table>
+      <tr><th>المصدر</th><th>الاستخدام</th><th>الشروط</th></tr>
+      <tr><td>NASA FIRMS (VIIRS و MODIS)</td><td>كشف الحرائق</td><td>بيانات ناسا المفتوحة؛ حرة مع الاستشهاد.</td></tr>
+      <tr><td>NASA MODIS MCD12C1 (الغطاء الأرضي)</td><td>تصنيف الغطاء النباتي وترشيح إنذارات الصحراء الكاذبة</td><td>NASA LP DAAC؛ دون قيود؛ يُطلب الاستشهاد.</td></tr>
+      <tr><td>Open-Meteo</td><td>الرياح</td><td>واجهة طقس مجانية؛ CC-BY 4.0.</td></tr>
+      <tr><td>OpenWeatherMap</td><td>الرياح (احتياطي)</td><td>الباقة المجانية؛ يلزم الإسناد.</td></tr>
+      <tr><td>OpenRouteService (HeiGIT)</td><td>مسارات الإخلاء</td><td>الباقة المجانية؛ © openrouteservice.org، بالاعتماد على OpenStreetMap.</td></tr>
+      <tr><td>OpenStreetMap</td><td>خرائط الأساس وبيانات الطرق</td><td>© مساهمو OpenStreetMap، <a href="https://www.openstreetmap.org/copyright">ODbL</a>. خادم البلاطات العام غير مخصص للإنتاج.</td></tr>
+      <tr><td>Natural Earth</td><td>حدود الجزائر</td><td>ملك عام.</td></tr>
+      <tr><td>Leaflet</td><td>مكتبة الخرائط التفاعلية</td><td>BSD-2-Clause.</td></tr>
+      <tr><td>Font Awesome (Free)</td><td>الأيقونات</td><td>CC-BY 4.0 / MIT / SIL OFL.</td></tr>
+    </table>
+
+    <h2>القيود</h2>
+    <p>يطبّق نداء مرشّح غطاء أرضي (MODIS) يزيل معظم الرصدات الحرارية في الصحراء القاحلة، حيث تكون مصادر الحرارة غالباً صناعية أو شعلات غاز لا حرائق غابات؛ ولأن المرشّح متحفّظ عمداً، قد يظهر عدد قليل من هذه المصادر. كما قد تُغفل الأقمار الصناعية حرائق تحجبها الغيوم أو الغطاء النباتي الكثيف. مناطق الإنذار تقديرات نموذجية وليست محيطات حريق مقيسة. يتجنّب حساب المسار مناطق الحرائق <i>المكتشفة</i> فقط ويعتمد على بيانات طرق من جهات خارجية. يدعم هذا النظام قرارات الحماية المدنية الرسمية ولا يحلّ محلها.</p>
+
+    <footer>نموذج نداء البحثي. للاستخدام البحثي والتقييمي. في حالة الطوارئ اتصل بالحماية المدنية (14).</footer>`
+}};
+
+let LANG = localStorage.getItem('nida_lang') || 'en';
+function apply(){
+  const d = I18N[LANG] || I18N.en;
+  document.documentElement.lang = LANG;
+  document.body.dir = (LANG === 'ar') ? 'rtl' : 'ltr';
+  document.getElementById('content').innerHTML = d.html;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.dataset.i18n;
+    if (d[k]) el.textContent = d[k];
+  });
+  document.querySelectorAll('.langs button').forEach(b =>
+    b.classList.toggle('active', b.dataset.lang === LANG));
+}
+document.querySelectorAll('.langs button').forEach(b => b.onclick = () => {
+  LANG = b.dataset.lang; localStorage.setItem('nida_lang', LANG); apply();
+});
+apply();
+</script>
+</body>
+</html>
